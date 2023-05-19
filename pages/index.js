@@ -21,11 +21,9 @@ minHeight:"90vh"
 <NavLogo>
 <Typography heading="h4" color="gradient" text="PortFolio" />
 </NavLogo>
-<SidebarTrigger
-content={<Icon icon="fas fa-bars" />}
-/>
 
-<LinkWrapper>
+
+<LinkWrapper visibleLinks>
 <Div funcss="light-success avatar hoverable pointer" width="30px" height="30px">
 <Icon icon="fab fa-youtube"  />
 </Div>
@@ -38,7 +36,7 @@ content={<Icon icon="fas fa-bars" />}
 </LinkWrapper>
 </Navbar>
 
-<Div padding="70px 0 0 0" maxWidth="500px" margin="0 auto">
+<Div padding="60px 0 0 0" maxWidth="500px" margin="0 auto">
   <RowFlex responsiveMedium gap="1rem">
     <Div>
     <Blob
@@ -52,7 +50,7 @@ content={<Icon icon="fas fa-bars" />}
     <Div>
     <Typography
 text="Iddris Abdul Wahab"
-heading="h1"
+heading="h4"
 color="secondary"
 lighter
 block
@@ -116,3 +114,4 @@ color="primary"
 </div>
 )
 }
+
