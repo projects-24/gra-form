@@ -98,7 +98,7 @@ const TaxReliefForm = () => {
     </div>
      <form onSubmit={handleSubmit} className='row form'>
         <div className="col lg-12 padding margin-top-30 margin-bottom-20">
-            <Typography
+        <Typography
             text='Personal Information'
             heading='h4'
             lighter
@@ -106,7 +106,7 @@ const TaxReliefForm = () => {
         </div>
       <div className='col sm-12 md-6 lg-6 padding'>
         <label className='text-italic text-primary text-small text-bold'>
-          Employee's Surname:
+          {`Employee's Surname:`}
           <input
           className='input full-width lighter borderless'
             type="text"
@@ -171,7 +171,7 @@ const TaxReliefForm = () => {
 
 <div className='col sm-12 md-6 lg-6 padding'>
   <label className='text-italic text-primary text-small text-bold'>
-    Mother's Maiden Name:
+    {`Mother's Maiden Name:`}
     <input
     className='input full-width lighter borderless'
       type="text"
@@ -331,7 +331,7 @@ lighter
 
 <div className='col sm-12 md-6 lg-6 padding'>
   <label className='text-italic text-primary text-small text-bold'>
-    Spouse's Date of Birth:
+    {`Spouse's Date of Birth:`}
     <input
     className='input full-width lighter borderless'
       type="date"
@@ -345,7 +345,7 @@ lighter
 
 <div className='col sm-12 md-6 lg-6 padding'>
   <label className='text-italic text-primary text-small text-bold'>
-    Spouse's Tax ID Number:
+    {`Spouse's Tax ID Number:`}
     <input
     className='input full-width lighter borderless'
       type="text"
@@ -373,6 +373,13 @@ lighter
 
 {/* Continue adding input
 className='input full-width lighter borderless' fields for children's particulars, disability status, etc. */}
+<div className="col lg-12 padding-20 margin-top-30 margin-bottom-20 border round-edge">
+<Typography
+text='Official use Only'
+heading='h4'
+lighter
+/>
+</div>
 
 <div className='col sm-12 md-6 lg-6 padding'>
   <button type="submit" className='button gradient full-width roundBtn'>Submit</button>
