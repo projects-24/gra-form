@@ -27,6 +27,9 @@ background-size: cover;
   background-color: white;
   position: relative;
 }
+.printedDoc{
+  margin: 2rem;
+}
 /* .form::after{
   position: absolute;
   content: url('/ca.png');
@@ -42,7 +45,14 @@ background-size: cover;
   font-style: italic;
 }
 
-
+@media print {
+.input{
+  box-shadow: none !important;
+}
+.row-flex{
+  display: flex !important;
+}
+}
 
 /* 
 
