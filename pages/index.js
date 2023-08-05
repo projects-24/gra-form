@@ -7,6 +7,7 @@ import Table from 'funuicss/component/Table'
 import TableHead from 'funuicss/component/TableHead'
 import TableData from 'funuicss/component/TableData'
 import TableRow from 'funuicss/component/TableRow'
+import PrintSheet from './print';
 const TaxReliefForm = () => {
   const [print, setprint] = useState(false)
   const [formData, setFormData] = useState({
@@ -33,32 +34,39 @@ const TaxReliefForm = () => {
     firstChildDob:'',
     firstChildInstitution:'',
     secondChildName:'',
-    firstChildDob:'',
+    secondChildDob:'',
     secondChildInstitution:'',
+    thirdChildName:'',
     thirdChildDob:'',
-    firstChildDob:'',
     thirdChildInstitution:'',
     isDisabled: false,
     employeeVerify:'',
 
   });
   const Print = ()=>{
-    setprint(true)
     new Promise((resolve, reject) => {
-      const myElement = document.getElementById('documents');
-      printElement(myElement);
-      function printElement(element) {
-          const originalContents = document.body.innerHTML;
-          const printContents = element.innerHTML;
-    
-          document.body.innerHTML = printContents;
-          window.print();
-    
-          document.body.innerHTML = originalContents;
-    
-      }
-
-    }).then(()=>setprint(false))
+    setprint(true)
+      resolve()
+    })
+    .then(()=>{
+      new Promise((resolve, reject) => {
+        const myElement = document.getElementById('documents');
+        printElement(myElement);
+        function printElement(element) {
+            const originalContents = document.body.innerHTML;
+            const printContents = element.innerHTML;
+      
+            document.body.innerHTML = printContents;
+            window.print();
+      
+            document.body.innerHTML = originalContents;
+      
+        }
+        resolve()
+      }).then(()=>{
+        window.location.reload()
+      })
+    })
   }
   const [errorMessages, setErrorMessages] = useState({});
 
@@ -71,6 +79,13 @@ const TaxReliefForm = () => {
 
   return (
    <div>
+    {
+      print ?
+      <div id="documents">
+        <PrintSheet doc={formData}/>
+      </div>
+      :''
+    }
     <div className="header ">
         <div className="width-700-max center fit">
             <RowFlex gap='1rem' responsiveSmall>
@@ -98,41 +113,7 @@ const TaxReliefForm = () => {
   
     </div>
      <form onSubmit={handleSubmit} className={`form ${print ? "printedDoc" : ''}`}>
-      <div id="documents">
-      <div className="col lg-12 padding margin-top-30 margin-bottom-20">
-       <RowFlex justify='space-between' gap='1rem'>
-        <div>
-        <RowFlex gap='1rem'>
-        <div className='row-flex'>
-            <img src='/logo.png' className='width-80 height-80' />
-            <img src='/ca.png' className='width-100 height-100 show-small' />
-        </div>
-        <div>
-            <Typography
-            text={`GHANA REVENUE AUTHORITY `}
-            heading="h4"
-            lighter
-            />
-            <br />
-            <Typography
-            text={`Tax relief application form (2023)`}
-            heading="h6"
-            italic
-            /></div>
-                  <div className='hide-small'>
-            <img src='/ca.png' className='width-100 height-100' />
-        </div>
-            </RowFlex>
-        </div>
-        <div>
-          <div className="border padding central text-small text-italic round-edge lighter" style={{width:'120px', height:"120px"}}>
-            Attach passport
-          </div>
-        </div>
-       </RowFlex>
-        </div>
-     
-
+      <div id="">
 
 
 <div className="col lg-12  margin-top-30">
@@ -565,38 +546,6 @@ lighter
 
 <div className="col lg-12 padding-20 margin-top-30 margin-bottom-20 border round-edge">
 <Typography
-text='Declaration of Employer'
-heading='h4'
-lighter
-/>
-<p />
-<Typography
-text={
-  `
-  I do hereby declare that the above information is to the best of my knowledge and beleief True, Correct and Complete
-  `
-}
-article
-color="secondary"
-italic
-/>
-<RowFlex funcss='margin-top-30' justify='space-between'>
-    <div>
-      <div className="bb width-200"></div>
-      <div className='text-secondary text-italic'>Signature</div>
-    </div>
-    <div>
-      <div className="bb width-200"></div>
-      <div className='text-secondary text-italic'>Declaration</div>
-    </div>
-    <div>
-      <div className="bb width-200"></div>
-      <div className='text-secondary text-italic'>Date</div>
-    </div>
-</RowFlex>
-</div>
-<div className="col lg-12 padding-20 margin-top-30 margin-bottom-20 border round-edge">
-<Typography
 text='Declaration of Employee'
 heading='h4'
 lighter
@@ -619,23 +568,8 @@ italic
       <option value="Yes">Yes</option>
       <option value="No">No</option>
     </select>
-<RowFlex funcss='margin-top-60 margin-bottom-30' justify='space-between'>
-    <div>
-      <div className="bb width-200"></div>
-      <div className='text-secondary text-italic'>Signature</div>
-    </div>
- 
-    <div>
-      <div className="bb width-200"></div>
-      <div className='text-secondary text-italic'>Date</div>
-    </div>
-</RowFlex>
-<Typography
-text={`The above employment is my primary employment and an ether Tax Relief Cand is inued or will be issued for this year`}
-article
-color="secondary"
-italic
-/>
+
+
 </div>
       </div>
 

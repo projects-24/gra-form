@@ -30,16 +30,7 @@ background-size: cover;
 .printedDoc{
   margin: 2rem;
 }
-/* .form::after{
-  position: absolute;
-  content: url('/ca.png');
-  width: 300px;
-  height: 300%;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50% -50%);
-} */
+
 
 .text-italic{
   font-style: italic;
@@ -54,44 +45,39 @@ background-size: cover;
 }
 }
 
-/* 
 
-
-Personal Information:
-
-Employee's Surname
-Other Name(s)
-Gender
-Date of Birth
-Mother's Maiden Name
-Social Security Number
-Tax File Number
-Marital Status (Married/Single)
-Name of Dependant Spouse
-Particulars of Spouse (Date of Birth, Tax ID Number)
-Number of Children
-Particulars of Children (Name, Date of Birth, Educational Institution)
-Disability Status (Yes/No)
-Certificate of Disability from Department of Social Welfare (if applicable)
-Employment Information:
-15. Name of Employer
-
-Address of Employer
-Telephone Number
-Tax ID Number
-Old Age Relief Status
-Amount of Old Age Relief
-Declaration:
-21. Employer's Declaration: Confirmation of correctness and completeness of provided information.
-
-Employee's Declaration: Confirmation of other sources of income and the accuracy of information provided.
-Tax Relief Information:
-23. Children's Education Relief Status
-
-Amount of Children's Education Relief
-Qualified for Disabled Relief (Yes/No)
-Computation of Summarized Amount of Relief for the Year
-Total Income (for the year)
-Monthly Deduction Amount
-First Deductible Month
-*/
+.printContainer{
+  position: relative;
+}
+.right{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 250px;
+  padding: 0.3rem !important;
+}
+.left{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 240px);
+  max-width: calc(100% - 240px);
+  padding: 1rem;
+}
+@media print {
+ 
+  .text-small{
+    font-size: 0.6rem !important
+  }
+  .padding{
+    padding: 0.2rem;
+  }
+  .padding-5{
+    padding: 0.2rem;
+  }
+  .section{
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+  }
+  td{padding: 0.2rem !important;}
+}
