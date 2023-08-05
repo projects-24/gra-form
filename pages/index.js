@@ -7,7 +7,7 @@ import Table from 'funuicss/component/Table'
 import TableHead from 'funuicss/component/TableHead'
 import TableData from 'funuicss/component/TableData'
 import TableRow from 'funuicss/component/TableRow'
-import PrintSheet from './print';
+import PrintSheet from './print_data';
 const TaxReliefForm = () => {
   const [print, setprint] = useState(false)
   const [formData, setFormData] = useState({
