@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import Typography from 'funuicss/component/Typography';
 import Button from 'funuicss/component/Button';
-import Icon from 'funuicss/component/Icon';
 import RowFlex from 'funuicss/component/RowFlex';
 import Table from 'funuicss/component/Table'
 import TableHead from 'funuicss/component/TableHead'
 import TableData from 'funuicss/component/TableData'
 import TableRow from 'funuicss/component/TableRow'
 import PrintSheet from './print_data';
+
+import Modal from 'funuicss/component/Modal'
+import ModalHeader from 'funuicss/component/ModalHeader'
+import CloseModal from 'funuicss/component/CloseModal'
+import ModalContent from 'funuicss/component/ModalContent'
+import ModalAction from 'funuicss/component/ModalAction'
+import Icon from 'funuicss/component/Icon'
+import Div from 'funuicss/component/Div'
 const TaxReliefForm = () => {
   const [print, setprint] = useState(false)
   const [formData, setFormData] = useState({
@@ -39,7 +46,7 @@ const TaxReliefForm = () => {
     thirdChildName:'',
     thirdChildDob:'',
     thirdChildInstitution:'',
-    isDisabled: false,
+    isDisabled: "",
     employeeVerify:'',
 
   });
@@ -74,18 +81,43 @@ const TaxReliefForm = () => {
     e.preventDefault();
     let data = JSON.stringify(formData)
     console.log(JSON.parse(data))
-    Print()
+    // Print()
+    setprint(true)
   };
 
   return (
    <div>
     {
-      print ?
-      <div id="documents">
-        <PrintSheet doc={formData}/>
-      </div>
-      :''
+      <Modal 
+animation="ScaleUp" 
+duration={0.4} 
+open={print}
+backdrop
+maxWidth="1200px"
+>
+<ModalHeader>
+  Print data
+  <CloseModal  onClick={()=>setprint(false)}/>
+</ModalHeader>
+<ModalContent funcss="padding-20">
+<div className="width-900-max center" style={{height:"80vh"}} id='documents'>
+<PrintSheet doc={formData}/>
+</div>
+</ModalContent>
+<ModalAction funcss="text-right light bottomEdge padding-20">
+<Button 
+bg="primary"
+outlined
+text="Print Data"
+rounded
+startIcon={<i className='fas fa-printer' />}
+onClick={()=>Print()}
+/>
+
+</ModalAction>
+</Modal>
     }
+    
     <div className="header ">
         <div className="width-700-max center fit">
             <RowFlex gap='1rem' responsiveSmall>
@@ -468,7 +500,7 @@ lighter
         <input
     className='input full-width lighter borderless'
       type="date"
-      value={formData.firstChildDob}
+      value={formData.secondChildDob}
       onChange={(e) =>
         setFormData({ ...formData, secondChildDob: e.target.value })
       }

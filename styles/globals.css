@@ -53,31 +53,49 @@ background-size: cover;
   position: absolute;
   top: 0;
   right: 0;
-  width: 250px;
+  width: 200px;
   padding: 0.3rem !important;
 }
 .left{
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% - 240px);
-  max-width: calc(100% - 240px);
+  width: calc(100% - 200px);
   padding: 1rem;
 }
+.text-small , .text-smaller{
+  line-height: 1rem !important;
+}
 @media print {
+  .printedDoc{
+    margin: 0;
+  }
+  .text-primary{
+color: #333333 !important;
+  }
  
   .text-small{
     font-size: 0.6rem !important
   }
   .padding{
-    padding: 0.2rem;
+    padding: 0.1rem;
   }
   .padding-5{
-    padding: 0.2rem;
+    padding: 0.1rem;
   }
   .section{
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
   }
-  td{padding: 0.2rem !important;}
+  td{padding: 0.1rem 0.3rem !important;}
+  .margin-top-10{
+    margin-top: 0.3rem;
+  }
+}
+
+.row{
+  align-items: center !important;
+}
+.myCols{
+  padding: 0.1rem 0.3rem ;
 }
