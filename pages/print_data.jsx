@@ -558,7 +558,7 @@ if(doc){
     <RowFlex funcss='margin-top-10' justify='space-between'>
         <div>
           <div className="bb width-100"></div>
-          <div className='text-secondary text-italic text-small text-center text-bold text-center'>Signature</div>
+          <div className='text-secondary text-italic text-small text-center text-bold text-center'>Signature OF Employer</div>
         </div>
      
         <div>
@@ -695,6 +695,10 @@ if(doc){
                             <div className='text-italic'>
                         All the information have been transferred to the TRC
                             </div>
+                        </p>
+                        <p className='text-center'>
+                            <div className='bb' />
+                            <div>Signature, Date</div>
                         </p>
                     </Div>
                 </Div> 
