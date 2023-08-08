@@ -99,3 +99,22 @@ color: #333333 !important;
 .myCols{
   padding: 0.1rem 0.3rem ;
 }
+
+.tableCard{
+  padding: 3rem 2rem;
+  box-shadow: 0 3rem 5rem 0rem rgba(0,0,0,0.2);
+  margin: 30px auto;
+}
+
+.lineSearch{
+  box-shadow:  none !important;
+  border-radius: 0 !important;
+}
+input[type="checkbox"] {
+  margin: 0 0.2rem !important; 
+  padding: 0 !;
+  display: inline;
+  width: 7px !important;
+  height: 7px !important;
+
+}

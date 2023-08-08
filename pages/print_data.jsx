@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Grid from 'funuicss/component/Grid'
 import Col from 'funuicss/component/Col'
 import Typography from 'funuicss/component/Typography'
@@ -9,6 +9,8 @@ import TableHead from 'funuicss/component/TableHead'
 import TableData from 'funuicss/component/TableData'
 import TableRow from 'funuicss/component/TableRow'
 export default function PrintSheet({doc}) {
+
+
 if(doc){
     return (
         <div>
@@ -62,7 +64,7 @@ if(doc){
           <div className="row-flex">
             <div className="width-300 bb">
             <Typography
-          text={`${doc.employeeSurname}`}
+          text={`${doc.employeeSurname ? doc.employeeSurname : ''}`}
           funcss='label'
           />
             </div>
@@ -82,7 +84,7 @@ if(doc){
           <div className="row-flex">
             <div className="width-300 bb">
             <Typography
-          text={`${doc.otherNames}`}
+          text={`${doc.othernames ? doc.othernames : ''}`}
           funcss='label'
           />
             </div>
@@ -135,7 +137,7 @@ if(doc){
             {`Date Of Birth:`}
           </label>
           <Typography
-          text={doc.dateOfBirth}
+          text={doc.dateofbirth}
           funcss='label'
           underline
           />
@@ -150,7 +152,7 @@ if(doc){
            <div className="row-flex">
             <div className="width-300 bb">
             <Typography
-          text={`${doc.motherMaidenName}`}
+          text={`${doc.mothermaidenname ? doc.mothermaidenname : ''}`}
           funcss='label'
           />
             </div>
@@ -166,7 +168,7 @@ if(doc){
                     <div className="row-flex">
             <div className="width-100 bb">
             <Typography
-          text={`${doc.socialSecurityNumber}`}
+          text={`${doc.socialsecuritynumber ? doc.socialsecuritynumber : ''}`}
           funcss='label'
           />
             </div>
@@ -185,7 +187,7 @@ if(doc){
                     <div className="row-flex">
             <div className="width-100 bb">
             <Typography
-          text={`${doc.taxFileNumber}`}
+          text={`${doc.taxfilenumber ? doc.taxfilenumber : ''}`}
           funcss='label'
           />
             </div>
@@ -203,7 +205,7 @@ if(doc){
                     <div className="row-flex">
             <div className="width-300 bb">
             <Typography
-          text={`${doc.employerName}`}
+          text={`${doc.employername ? doc.employername : ''}`}
           funcss='label'
           />
             </div>
@@ -221,7 +223,7 @@ if(doc){
                     <div className="row-flex">
             <div className="width-300 bb">
             <Typography
-          text={`${doc.employerAddress}`}
+          text={`${doc.employeraddress ? doc.employeraddress : ''}`}
           funcss='label'
           />
             </div>
@@ -239,7 +241,7 @@ if(doc){
                     <div className="row-flex">
             <div className="width-100 bb">
             <Typography
-          text={`${doc.telephoneNumber}`}
+          text={`${doc.telephonenumber ? doc.telephonenumber : ''}`}
           funcss='label'
           />
             </div>
@@ -257,7 +259,7 @@ if(doc){
       <div className="row-flex">
       <div className="width-100 bb">
       <Typography
-      text={`${doc.taxId}`}
+      text={`${doc.taxid ? doc.taxid : ''}`}
       funcss='label'
       />
       </div>
@@ -269,8 +271,39 @@ if(doc){
         </div>
     
     
+        <div className="col lg-12 sm-12 md-12text-smaller">
+         Has there been any changes in your personal particulars from that of the previous year?
+         <RowFlex>
+            <div>
+             <RowFlex>
+              <div>Yes:</div>
+              <div>
+              <input
+          type='checkbox'
+          checked={ doc.changesinpersonal ? true : false}
+          />
+              </div>
+              </RowFlex>  
+              
+              </div>
+            <div>
+             <RowFlex>
+              <div>No:</div>
+              <div>
+              <input
+          type='checkbox'
+          checked={ !doc.changesinpersonal ? true : false}
+          />
+              </div>
+              </RowFlex>  
+              
+              </div>
+           </RowFlex>
+           <div className="text-samller">If no proceed to sign declaration</div>
+        </div>
         <div className="col lg-12 sm-12 md-12  margin-top-10">
           {`Personal particulars`}
+
         </div>
     
         <div className={"col sm-6 md-6 lg-6"}>
@@ -286,7 +319,7 @@ if(doc){
               <div>
               <input
           type='checkbox'
-          checked={doc.maritalStatus.trim().toLowerCase() == "married" ? true : false}
+          checked={doc.maritalstatus ? doc.maritalstatus.trim().toLowerCase() == "married" ? true : false : ''}
           />
               </div>
               </RowFlex>  
@@ -298,7 +331,7 @@ if(doc){
               <div>
               <input
           type='checkbox'
-          checked={doc.maritalStatus.trim().toLowerCase() == "single" ? true : false}
+          checked={doc.maritalstatus ? doc.maritalstatus.trim().toLowerCase() == "single" ? true : false : ''}
           />
               </div>
               </RowFlex>  
@@ -315,7 +348,7 @@ if(doc){
             {`If Married, Name of Dependant Spouse:`}
           </label>
           <Typography
-          text={doc.dependentSpouse}
+          text={doc.dependentspouse ? doc.dependentspouse : ''}
           funcss='label'
           underline
           />
@@ -334,7 +367,7 @@ if(doc){
                 <div className="row-flex">
       <div className="width-100 bb">
       <Typography
-      text={`${doc.spouseDateOfBirth}`}
+      text={`${doc.spousedateofbirth ? doc.spousedateofbirth : ''}`}
       funcss='label'
       />
       </div>
@@ -353,7 +386,7 @@ if(doc){
                 <div className="row-flex">
       <div className="width-100 bb">
       <Typography
-      text={`${doc.spouseTaxId}`}
+      text={`${doc.spousetaxid ? doc.spousetaxid : ''}`}
       funcss='label'
       />
       </div>
@@ -373,7 +406,7 @@ if(doc){
                 <div className="row-flex">
       <div className="width-100 bb">
       <Typography
-      text={`${doc.spouseTaxtFileNumber}`}
+      text={`${doc.spousetaxtfilenumber ? doc.spousetaxtfilenumber : ''}`}
       funcss='label'
       />
       </div>
@@ -391,7 +424,7 @@ if(doc){
                 <div className="row-flex">
       <div className="width-100 bb">
       <Typography
-      text={`${doc.spouseSocialSecurityNumber}`}
+      text={`${doc.spousesocialsecuritynumber ? doc.spousesocialsecuritynumber : ''}`}
       funcss='label'
       />
       </div>
@@ -409,7 +442,7 @@ if(doc){
             {`Number Of Children:`}
           </label>
           <Typography
-          text={doc.numberOfChildren}
+          text={doc.numberofchildren ? doc.numberofchildren : ""}
           funcss='label border height-20 width-20 central round-edge'
           />
         </RowFlex>
@@ -427,19 +460,19 @@ if(doc){
             </TableHead>
             <tbody>
               <TableRow>
-                <TableData>{doc.firstChildName}</TableData>
-                <TableData>{doc.firstChildDob}</TableData>
-                <TableData>{doc.firstChildInstitution}</TableData>
+                <TableData>{doc.firstchildname ? doc.firstchildname : ''}</TableData>
+                <TableData>{doc.firstchilddob ? doc.firstchilddob : ''}</TableData>
+                <TableData>{doc.firstchildinstitution ? doc.firstchildinstitution : ''}</TableData>
               </TableRow>
               <TableRow>
-                <TableData>{doc.secondChildName}</TableData>
-                <TableData>{doc.secondChildDob}</TableData>
-                <TableData>{doc.secondChildInstitution}</TableData>
+                <TableData>{doc.secondchildname ? doc.secondchildname : ''}</TableData>
+                <TableData>{doc.secondchilddob ? doc.secondchilddob : ''}</TableData>
+                <TableData>{doc.secondchilddob ? doc.secondchilddob : ''}</TableData>
               </TableRow>
               <TableRow>
-                <TableData>{doc.thirdChildName}</TableData>
-                <TableData>{doc.thirdChildDob}</TableData>
-                <TableData>{doc.thirdChildInstitution}</TableData>
+                <TableData>{doc.thirdchildname ? doc.thirdchildname : ''}</TableData>
+                <TableData>{doc.thirdchilddob ? doc.thirdchilddob : ''}</TableData>
+                <TableData>{doc.thirdchildinstitution ? doc.thirdchildinstitution :''}</TableData>
               </TableRow>
             </tbody>
           </Table>
@@ -463,7 +496,7 @@ if(doc){
               <div>
               <input
           type='checkbox'
-          checked={doc.isDisabled.trim().toLowerCase() == "yes" ? true : false}
+          checked={doc.isdisabled  ? true : false}
           />
               </div>
               </RowFlex>  
@@ -475,7 +508,7 @@ if(doc){
               <div>
               <input
           type='checkbox'
-          checked={doc.isDisabled.trim().toLowerCase() == "no" ? true : false}
+          checked={!doc.isdisabled ? true : false }
           />
               </div>
               </RowFlex>  
@@ -528,7 +561,7 @@ if(doc){
               <div>
               <input
           type='checkbox'
-          checked={doc.employeeVerify.trim().toLowerCase() == "yes" ? true : false}
+          checked={doc.employeeverify  ? true : false}
           />
               </div>
               </RowFlex>  
@@ -540,7 +573,7 @@ if(doc){
               <div>
               <input
           type='checkbox'
-          checked={doc.employeeVerify.trim().toLowerCase() == "no" ? true : false}
+          checked={!doc.employeeverify ? true : false }
           />
               </div>
               </RowFlex>  
@@ -669,7 +702,7 @@ if(doc){
                           {`(7) Total`}
                             </div>
                             <div className="row-flex section" style={{alignItems:'flex-end' , gap:"0.3rem"}}>
-                              <div>{`GHC`}</div>
+                              <div>{`GH₵`}</div>
                               <div className="bb width-100"></div>
                             </div>
                         </p>
@@ -678,7 +711,7 @@ if(doc){
                         Divided by <span className="width-50 bb" style={{display:'inline-block'}}></span> monthly deduction
                             </div>
                             <div className="row-flex section" style={{alignItems:'flex-end' , gap:"0.3rem"}}>
-                              <div>{`(8) GHC`}</div>
+                              <div>{`(8) GH₵`}</div>
                               <div className="bb width-100"></div>
                             </div>
                         </p>
@@ -707,6 +740,6 @@ if(doc){
         </div>
       )
 }else{
-    return ""
+    return "ddd"
 }
 }

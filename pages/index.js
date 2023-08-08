@@ -15,39 +15,48 @@ import ModalContent from 'funuicss/component/ModalContent'
 import ModalAction from 'funuicss/component/ModalAction'
 import Icon from 'funuicss/component/Icon'
 import Div from 'funuicss/component/Div'
+import FunLoader from 'funuicss/component/FunLoader'
+import SuccessModal from "../components/Modals/SuccessModal"
+import InfoModal from "../components/Modals/InfoModal"
+import {FunRequest} from 'funuicss/js/Fun'
 const TaxReliefForm = () => {
   const [print, setprint] = useState(false)
+  const [loading, setloading] = useState(false)
+  const [success, setsuccess] = useState("")
+  const [info, setinfo] = useState("")
+
+  let EndPoint = "https://gra-form-backend.onrender.com/api"
   const [formData, setFormData] = useState({
-    employeeSurname: '',
-    otherNames: '',
+    employeesurname: '',
+    othernames: '',
     gender: '',
-    dateOfBirth: '',
-    motherMaidenName: '',
-    socialSecurityNumber: '',
-    taxFileNumber: '',
-    employerName: '',
-    employerAddress: '',
-    telephoneNumber: '',
-    taxId: '',
-    changesInPersonal: '',
-    maritalStatus: '',
-    dependentSpouse: '',
-    spouseDateOfBirth: '',
-    spouseTaxtFileNumber: '',
-    spouseSocialSecurityNumber: '',
-    spouseTaxId: '',
-    numberOfChildren: '',
-    firstChildName:'',
-    firstChildDob:'',
-    firstChildInstitution:'',
-    secondChildName:'',
-    secondChildDob:'',
-    secondChildInstitution:'',
-    thirdChildName:'',
-    thirdChildDob:'',
-    thirdChildInstitution:'',
-    isDisabled: "",
-    employeeVerify:'',
+    dateofbirth: '',
+    mothermaidenname: '',
+    socialsecuritynumber: '',
+    taxfilenumber: '',
+    employername: '',
+    employeraddress: '',
+    telephonenumber: '',
+    taxid: '',
+    changesinpersonal: '',
+    maritalstatus: '',
+    dependentspouse: '',
+    spousedateofbirth: '',
+    spousetaxtfilenumber: '',
+    spousesocialsecuritynumber: '',
+    spousetaxid: '',
+    numberofchildren: '',
+    firstchildname:'',
+    firstchilddob:'',
+    firstchildinstitution:'',
+    secondchildname:'',
+    secondchilddob:'',
+    secondchildinstitution:'',
+    thirdchildname:'',
+    thirdchilddob:'',
+    thirdchildinstitution:'',
+    isdisabled: false,
+    employeeverify:false,
 
   });
   const Print = ()=>{
@@ -79,14 +88,67 @@ const TaxReliefForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let data = JSON.stringify(formData)
-    console.log(JSON.parse(data))
-    // Print()
+    let data = formData
+    if(  
+      data.employeesurname !== '' &&
+    data.othernames !== '' &&
+    data.gender !== '' &&
+    data.dateofbirth !== '' &&
+    data.mothermaidenname !== '' &&
+    data.socialsecuritynumber !== '' &&
+    data.taxfilenumber !== '' &&
+    data.employername !== '' &&
+    data.employeraddress !== '' &&
+    data.telephonenumber !== '' &&
+    data.taxid !== '' &&
+    data.changesinpersonal !== '' &&
+    data.maritalstatus !== '' &&
+    data.numberofchildren !== '' &&
+    data.isdisabled !== '' &&
+    data.employeeverify !== ''
+    ){
+      setloading(true)
+      FunRequest.post(EndPoint + '/employee' , data).then((doc)=>{
+        console.log(doc)
+        setsuccess({
+          header:"Submitted",
+          message:"Wait for priting"
+        })
+        setloading(false)
+        setTimeout(() => {
+              // Print()
+              setsuccess(false)
     setprint(true)
+        }, 3000);
+      })
+        .catch(err=>{
+          setloading(false)
+        })
+    }else{
+      setinfo({
+        header:"Invalid Fields",
+        message:"Enter all the valid fields"
+      })
+      setTimeout(() => {
+
+        setinfo(false)
+  }, 3000);
+    }
+
   };
 
   return (
    <div>
+{
+  loading &&
+  <FunLoader fixed size="70px"/>
+}
+{
+  success && <SuccessModal header={success.header} message={success.message} />
+}
+{
+  info && <InfoModal header={info.header} message={info.message} />
+}
     {
       <Modal 
 animation="ScaleUp" 
@@ -156,13 +218,13 @@ onClick={()=>Print()}
           <input
           className='input full-width lighter borderless'
             type="text"
-            value={formData.employeeSurname}
+            value={formData.employeesurname}
             onChange={(e) =>
-              setFormData({ ...formData, employeeSurname: e.target.value })
+              setFormData({ ...formData, employeesurname: e.target.value })
             }
           />
-          {errorMessages.employeeSurname && (
-            <span className='text-danger text-small text-bold'>{errorMessages.employeeSurname}</span>
+          {!formData.employeesurname && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
           )}
         </label>
       </div>
@@ -174,15 +236,18 @@ onClick={()=>Print()}
           <input
           className='input full-width lighter borderless'
             type="text"
-            value={formData.otherNames}
+            value={formData.othernames}
             onChange={(e) =>
-              setFormData({ ...formData, otherNames: e.target.value })
+              setFormData({ ...formData, othernames: e.target.value })
             }
           />
-            {errorMessages.otherNames && (
-            <span className='text-danger text-small text-bold'>{errorMessages.otherNames}</span>
+            {errorMessages.othernames && (
+            <span className='text-danger text-small text-bold'>{errorMessages.othernames}</span>
           )}
         </label>
+        {!formData.othernames && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
       </div>
 
       <div className={"col sm-6 md-6 lg-6 padding"}>
@@ -199,6 +264,9 @@ onClick={()=>Print()}
             <option value="Other">Other</option>
           </select>
         </label>
+        {!formData.gender && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
       </div>
 
       <div className={"col sm-6 md-6 lg-6 padding"}>
@@ -207,12 +275,15 @@ onClick={()=>Print()}
     <input
     className='input full-width lighter borderless'
       type="date"
-      value={formData.dateOfBirth}
+      value={formData.dateofbirth}
       onChange={(e) =>
-        setFormData({ ...formData, dateOfBirth: e.target.value })
+        setFormData({ ...formData, dateofbirth: e.target.value })
       }
     />
   </label>
+  {!formData.dateofbirth && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
 <div className={"col sm-6 md-6 lg-6 padding"}>
@@ -221,12 +292,15 @@ onClick={()=>Print()}
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.motherMaidenName}
+      value={formData.mothermaidenname}
       onChange={(e) =>
-        setFormData({ ...formData, motherMaidenName: e.target.value })
+        setFormData({ ...formData, mothermaidenname: e.target.value })
       }
     />
   </label>
+  {!formData.mothermaidenname && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
 <div className={"col sm-6 md-6 lg-6 padding"}>
@@ -235,12 +309,15 @@ onClick={()=>Print()}
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.socialSecurityNumber}
+      value={formData.socialsecuritynumber}
       onChange={(e) =>
-        setFormData({ ...formData, socialSecurityNumber: e.target.value })
+        setFormData({ ...formData, socialsecuritynumber: e.target.value })
       }
     />
   </label>
+  {!formData.socialsecuritynumber && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
 <div className={"col sm-6 md-6 lg-6 padding"}>
@@ -249,12 +326,15 @@ onClick={()=>Print()}
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.taxFileNumber}
+      value={formData.taxfilenumber}
       onChange={(e) =>
-        setFormData({ ...formData, taxFileNumber: e.target.value })
+        setFormData({ ...formData, taxfilenumber: e.target.value })
       }
     />
   </label>
+  {!formData.taxfilenumber && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 <div className={"col sm-6 md-6 lg-6 padding"}>
   <label className='text-italic text-primary text-small text-bold'>
@@ -262,12 +342,15 @@ onClick={()=>Print()}
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.employerName}
+      value={formData.employername}
       onChange={(e) =>
-        setFormData({ ...formData, employerName: e.target.value })
+        setFormData({ ...formData, employername: e.target.value })
       }
     />
   </label>
+  {!formData.employername && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
 <div className={"col sm-6 md-6 lg-6 padding"}>
@@ -276,12 +359,15 @@ onClick={()=>Print()}
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.employerAddress}
+      value={formData.employeraddress}
       onChange={(e) =>
-        setFormData({ ...formData, employerAddress: e.target.value })
+        setFormData({ ...formData, employeraddress: e.target.value })
       }
     />
   </label>
+  {!formData.employeraddress && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
 <div className={"col sm-6 md-6 lg-6 padding"}>
@@ -290,12 +376,15 @@ onClick={()=>Print()}
     <input
     className='input full-width lighter borderless'
       type="tel"
-      value={formData.telephoneNumber}
+      value={formData.telephonenumber}
       onChange={(e) =>
-        setFormData({ ...formData, telephoneNumber: e.target.value })
+        setFormData({ ...formData, telephonenumber: e.target.value })
       }
     />
   </label>
+  {!formData.telephonenumber && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
 <div className={"col sm-6 md-6 lg-6 padding"}>
@@ -304,12 +393,15 @@ onClick={()=>Print()}
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.taxId}
+      value={formData.taxid}
       onChange={(e) =>
-        setFormData({ ...formData, taxId: e.target.value })
+        setFormData({ ...formData, taxid: e.target.value })
       }
     />
   </label>
+  {!formData.taxid && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 <div className="col lg-12 padding margin-top-30 margin-bottom-20">
 <Typography
@@ -317,15 +409,18 @@ text='Has there been any changes in your personal particulars from that of the p
 />
 <select
     className='input full-width lighter borderless'
-      value={formData.changesInPersonal}
+      value={formData.changesinpersonal}
       onChange={(e) =>
-        setFormData({ ...formData, changesInPersonal: e.target.value })
+        setFormData({ ...formData, changesinpersonal: e.target.value })
       }
     >
       <option value="">Select yes or no</option>
       <option value="True">Yes</option>
       <option value="False">No</option>
     </select>
+    {!formData.changesinpersonal && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
 
@@ -333,21 +428,21 @@ text='Has there been any changes in your personal particulars from that of the p
 </div>
 <div className="col lg-12  margin-top-30">
   <div className="row border padding round-edge">
-    <div className="col lg-12 padding margin-bottom-20">
+    <div className="col lg-12 padding">
 <Typography
 text='Personal particulars'
 heading='h4'
 lighter
 />
 </div>
-<div className={"col sm-6 md-6 lg-6 padding"}>
+<div className={ "col sm-12 md-12 lg-12 padding"}>
   <label className='text-italic text-primary text-small text-bold'>
     Marital Status:
     <select
     className='input full-width lighter borderless'
-      value={formData.maritalStatus}
+      value={formData.maritalstatus}
       onChange={(e) =>
-        setFormData({ ...formData, maritalStatus: e.target.value })
+        setFormData({ ...formData, maritalstatus: e.target.value })
       }
     >
       <option value="">Select marital status</option>
@@ -355,19 +450,28 @@ lighter
       <option value="Single">Single</option>
     </select>
   </label>
+  {!formData.maritalstatus && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
-<div className={"col sm-6 md-6 lg-6 padding"}>
+{
+  formData.maritalstatus == "Married" &&
+  <div className="row">
+    <div className={"col sm-6 md-6 lg-6 padding"}>
   <label className='text-italic text-primary text-small text-bold'>
     Name of Dependant Spouse:
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.dependentSpouse}
+      value={formData.dependentspouse}
       onChange={(e) =>
-        setFormData({ ...formData, dependentSpouse: e.target.value })
+        setFormData({ ...formData, dependentspouse: e.target.value })
       }
     />
   </label>
+  {!formData.dependentspouse && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
 
@@ -377,12 +481,15 @@ lighter
     <input
     className='input full-width lighter borderless'
       type="date"
-      value={formData.spouseDateOfBirth}
+      value={formData.spousedateofbirth}
       onChange={(e) =>
-        setFormData({ ...formData, spouseDateOfBirth: e.target.value })
+        setFormData({ ...formData, spousedateofbirth: e.target.value })
       }
     />
   </label>
+  {!formData.spousedateofbirth && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
 <div className={"col sm-6 md-6 lg-6 padding"}>
@@ -391,12 +498,15 @@ lighter
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.spouseTaxtFileNumber}
+      value={formData.spousetaxtfilenumber}
       onChange={(e) =>
-        setFormData({ ...formData, spouseTaxtFileNumber: e.target.value })
+        setFormData({ ...formData, spousetaxtfilenumber: e.target.value })
       }
     />
   </label>
+  {!formData.spousetaxtfilenumber && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 <div className={"col sm-6 md-6 lg-6 padding"}>
   <label className='text-italic text-primary text-small text-bold'>
@@ -404,26 +514,34 @@ lighter
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.spouseSocialSecurityNumber}
+      value={formData.spousesocialsecuritynumber}
       onChange={(e) =>
-        setFormData({ ...formData, spouseSocialSecurityNumber: e.target.value })
+        setFormData({ ...formData, spousesocialsecuritynumber: e.target.value })
       }
     />
   </label>
+  {!formData.spousesocialsecuritynumber && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
-<div className={"col sm-6 md-6 lg-6 padding"}>
+<div className={"col sm-12 md-12 lg-12 padding"}>
   <label className='text-italic text-primary text-small text-bold'>
     {`Spouse's Tax ID Number:`}
     <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.spouseTaxId}
+      value={formData.spousetaxid}
       onChange={(e) =>
-        setFormData({ ...formData, spouseTaxId: e.target.value })
+        setFormData({ ...formData, spousetaxid: e.target.value })
       }
     />
   </label>
+  {!formData.spousetaxid && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
+  </div>
+}
 
 <div className={"col sm-12 md-12 lg-12 padding"}>
   <label className='text-italic text-primary text-small text-bold'>
@@ -431,33 +549,40 @@ lighter
     <input
     className='input full-width lighter borderless'
       type="number"
-      value={formData.numberOfChildren}
+      value={formData.numberofchildren}
       onChange={(e) =>
-        setFormData({ ...formData, numberOfChildren: e.target.value })
+        setFormData({ ...formData, numberofchildren: e.target.value })
       }
     />
   </label>
+  {!formData.numberofchildren && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
-<div className='col sm-12 md-12 lg-12 padding border round-edge section'>
+{
+  formData.numberofchildren && parseInt(formData.numberofchildren) > 0 &&
+  <div className='col sm-12 md-12 lg-12 padding border round-edge section'>
   <label className='text-italic text-primary text-small text-bold'>
     {`Childrens details `}
   </label>
-  <Table funcss='text-small' stripped>
+  <Table funcss='text-small ' stripped>
     <TableHead>
       <TableData>Name</TableData>
       <TableData>Date Of Birth</TableData>
       <TableData>Educational Institution</TableData>
     </TableHead>
     <tbody>
-      <TableRow>
+      {
+        parseInt(formData.numberofchildren) > 0 &&
+        <TableRow>
         <TableData>
         <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.firstChildName}
+      value={formData.firstchildname}
       placeholder='Full Name'
       onChange={(e) =>
-        setFormData({ ...formData, firstChildName: e.target.value })
+        setFormData({ ...formData, firstchildname: e.target.value })
       }
     />
         </TableData>
@@ -465,9 +590,9 @@ lighter
         <input
     className='input full-width lighter borderless'
       type="date"
-      value={formData.firstChildDob}
+      value={formData.firstchilddob}
       onChange={(e) =>
-        setFormData({ ...formData, firstChildDob: e.target.value })
+        setFormData({ ...formData, firstchilddob: e.target.value })
       }
     />
         </TableData>
@@ -475,101 +600,115 @@ lighter
         <input
     className='input full-width lighter borderless'
       type="text"
-      value={formData.firstChildInstitution}
+      value={formData.firstchildinstitution}
       placeholder='Institution Name'
       onChange={(e) =>
-        setFormData({ ...formData, firstChildInstitution: e.target.value })
+        setFormData({ ...formData, firstchildinstitution: e.target.value })
       }
     />
         </TableData>
       </TableRow>
+      }
+      {
+        parseInt(formData.numberofchildren) > 1 &&
+        
+      <TableRow>
+      <TableData>
+      <input
+  className='input full-width lighter borderless'
+    type="text"
+    value={formData.secondchildname}
+    placeholder='Full Name'
+    onChange={(e) =>
+      setFormData({ ...formData, secondchildname: e.target.value })
+    }
+  />
+      </TableData>
+      <TableData>
+      <input
+  className='input full-width lighter borderless'
+    type="date"
+    value={formData.secondchilddob}
+    onChange={(e) =>
+      setFormData({ ...formData, secondchilddob: e.tarcet.vdlue })
+    }
+  />
+      </TableData>
+      <TableData>
+      <input
+  className='input full-width lighter borderless'
+    type="text"
+    value={formData.secondchildinstitution}
+    placeholder='Institution Name'
+    onChange={(e) =>
+      setFormData({ ...formData, secondchildinstitution: e.target.value })
+    }
+  />
+      </TableData>
+    </TableRow>
+      }
+      {
+        parseInt(formData.numberofchildren) > 2 &&
+        <TableRow>
+        <TableData>
+        <input
+    className='input full-width lighter borderless'
+      type="text"
+      value={formData.thirdchildname}
+      placeholder='Full Name'
+      onChange={(e) =>
+        setFormData({ ...formData, thirdchildname: e.target.value })
+      }
+    />
+        </TableData>
+        <TableData>
+        <input
+    className='input full-width lighter borderless'
+      type="date"
+      value={formData.thirdchilddob}
+      onChange={(e) =>
+        setFormData({ ...formData, thirdchilddob: e.target.value })
+      }
+    />
+        </TableData>
+        <TableData>
+        <input
+    className='input full-width lighter borderless'
+      type="text"
+      value={formData.thirdchildinstitution}
+      placeholder='Institution Name'
+      onChange={(e) =>
+        setFormData({ ...formData, thirdchildinstitution: e.target.value })
+      }
+    />
+        </TableData>
+      </TableRow>
+      }
 
-      <TableRow>
-        <TableData>
-        <input
-    className='input full-width lighter borderless'
-      type="text"
-      value={formData.secondChildName}
-      placeholder='Full Name'
-      onChange={(e) =>
-        setFormData({ ...formData, secondChildName: e.target.value })
-      }
-    />
-        </TableData>
-        <TableData>
-        <input
-    className='input full-width lighter borderless'
-      type="date"
-      value={formData.secondChildDob}
-      onChange={(e) =>
-        setFormData({ ...formData, secondChildDob: e.target.value })
-      }
-    />
-        </TableData>
-        <TableData>
-        <input
-    className='input full-width lighter borderless'
-      type="text"
-      value={formData.secondChildInstitution}
-      placeholder='Institution Name'
-      onChange={(e) =>
-        setFormData({ ...formData, secondChildInstitution: e.target.value })
-      }
-    />
-        </TableData>
-      </TableRow>
-      <TableRow>
-        <TableData>
-        <input
-    className='input full-width lighter borderless'
-      type="text"
-      value={formData.thirdChildName}
-      placeholder='Full Name'
-      onChange={(e) =>
-        setFormData({ ...formData, thirdChildName: e.target.value })
-      }
-    />
-        </TableData>
-        <TableData>
-        <input
-    className='input full-width lighter borderless'
-      type="date"
-      value={formData.thirdChildDob}
-      onChange={(e) =>
-        setFormData({ ...formData, thirdChildDob: e.target.value })
-      }
-    />
-        </TableData>
-        <TableData>
-        <input
-    className='input full-width lighter borderless'
-      type="text"
-      value={formData.thirdChildInstitution}
-      placeholder='Institution Name'
-      onChange={(e) =>
-        setFormData({ ...formData, thirdChildInstitution: e.target.value })
-      }
-    />
-        </TableData>
-      </TableRow>
+
+     
     </tbody>
   </Table>
 </div>
+}
 <div className='col sm-12 md-12 lg-12 padding'>
   <label className='text-italic text-primary text-small text-bold'>
     {`Are you disabled(if yes then attach certificate from department of social welfare):`}
     <select
     className='input full-width lighter borderless'
-      value={formData.isDisabled}
+      value={formData.isdisabled}
       onChange={(e) =>
-        setFormData({ ...formData, isDisabled: e.target.value })
+        setFormData({ ...formData, isdisabled: e.target.value })
       }
     >
       <option value="">Select Yes or No</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
+      <option value={true}>Yes</option>
+      <option value={false}>No</option>
     </select>
   </label>
+  {!formData.isdisabled && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 </div>
 
   </div>
@@ -591,16 +730,18 @@ italic
 />
 <select
     className='input full-width lighter borderless'
-      value={formData.employeeVerify}
+      value={formData.employeeverify}
       onChange={(e) =>
-        setFormData({ ...formData, employeeVerify: e.target.value })
+        setFormData({ ...formData, employeeverify: e.target.value })
       }
     >
       <option value="">Select Yes or No</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
+      <option value={true}>Yes</option>
+      <option value={false}>No</option>
     </select>
-
+    {!formData.employeeverify && (
+            <span className='text-danger text-small text-bold'>{"Fill detail"}</span>
+          )}
 
 </div>
       </div>

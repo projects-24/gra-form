@@ -1,0 +1,1 @@
+export const EndPoint = "https://gra-form-backend.onrender.com/api"
