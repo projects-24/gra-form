@@ -271,7 +271,7 @@ if(doc){
         </div>
     
     
-        <div className="col lg-12 sm-12 md-12text-smaller">
+        <div className="col lg-12 sm-12 md-12 text-small">
          Has there been any changes in your personal particulars from that of the previous year?
          <RowFlex>
             <div>
@@ -299,7 +299,7 @@ if(doc){
               
               </div>
            </RowFlex>
-           <div className="text-samller">If no proceed to sign declaration</div>
+           <div className="text-small">If no proceed to sign declaration</div>
         </div>
         <div className="col lg-12 sm-12 md-12  margin-top-10">
           {`Personal particulars`}
@@ -467,7 +467,7 @@ if(doc){
               <TableRow>
                 <TableData>{doc.secondchildname ? doc.secondchildname : ''}</TableData>
                 <TableData>{doc.secondchilddob ? doc.secondchilddob : ''}</TableData>
-                <TableData>{doc.secondchilddob ? doc.secondchilddob : ''}</TableData>
+                <TableData>{doc.secondchildinstitution ? doc.secondchildinstitution : ''}</TableData>
               </TableRow>
               <TableRow>
                 <TableData>{doc.thirdchildname ? doc.thirdchildname : ''}</TableData>
@@ -626,7 +626,7 @@ if(doc){
                         </p>
                         <p>
                             <div>
-                                marraige relief granted an amount of
+                                marriage relief granted an amount of
                             </div>
                             <div className="row-flex section" style={{alignItems:'flex-end' , gap:"0.3rem"}}>
                               <div>{`b)`}</div>

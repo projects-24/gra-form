@@ -118,3 +118,20 @@ input[type="checkbox"] {
   height: 7px !important;
 
 }
+
+
+.form_container{
+  min-height: 100vh;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 3rem;
+}
+.login_form{
+  max-width: 500px;
+  width: 100%;
+  padding: 3rem 2rem; 
+  border-radius: 3rem;
+  box-shadow: 0 3rem 4rem 0 rgba(0,0,0,0.2);
+}

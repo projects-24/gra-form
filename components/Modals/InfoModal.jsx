@@ -30,13 +30,13 @@ maxWidth="500px"
         </Div>
         <Div>
             <Typography
-            text={header ? header : ''}
+            text={header ? header : 'Error'}
             heading="h5"
             block
             />
             <Typography
             color="secondary"
-            text={message}
+            text={message ? message : 'There is an error in submitting data'}
             block
             />
         </Div>
